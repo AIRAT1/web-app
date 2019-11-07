@@ -1,6 +1,7 @@
 package ru.itpark.service;
 
 import ru.itpark.domain.Auto;
+import ru.itpark.util.JDBCTemplate;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -41,6 +42,18 @@ public class AutoService {
             }
         }
     }
+
+//    public List<Auto> getAll() throws SQLException{
+//        return JDBCTemplate.executeQuery(
+//                "jdbc:sqlite::memory:",
+//                "SELECT id, name, description, image FROM autos;",
+//                rs -> new Auto(
+//                        rs.getString("id"),
+//                        rs.getString("name"),
+//                        rs.getString("description"),
+//                        rs.getString("image")
+//                ));
+//    }
 
     public void create(String name, String description, String image) throws SQLException {
         try (var conn = ds.getConnection()){
