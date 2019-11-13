@@ -31,13 +31,8 @@ public class CatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            req.setAttribute("items", autoService.getAll());
-            req.getRequestDispatcher("/WEB-INF/catalog.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        }
+        req.setAttribute("items", autoService.getAll());
+        req.getRequestDispatcher("/WEB-INF/catalog.jsp").forward(req, resp);
     }
 
     @Override

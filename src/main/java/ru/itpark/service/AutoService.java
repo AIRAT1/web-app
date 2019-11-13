@@ -3,11 +3,15 @@ package ru.itpark.service;
 import ru.itpark.domain.Auto;
 import ru.itpark.util.JDBCTemplate;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,46 +28,56 @@ public class AutoService {
         }
     }
 
-    public List<Auto> getAll() throws SQLException {
-        try (var conn = ds.getConnection()){
-            try (var stmt = conn.createStatement()){
-                try (var rs = stmt.executeQuery("SELECT id, name, description, image FROM autos;")){
-                    var list = new ArrayList<Auto>();
-                    while (rs.next()) {
-                        list.add(new Auto(
-                                rs.getString("id"),
-                                rs.getString("name"),
-                                rs.getString("description"),
-                                rs.getString("image")
-                        ));
-                    }
-                    return list;
-                }
-            }
+//    public List<Auto> getAll() throws SQLException {
+//        try (var conn = ds.getConnection()){
+//            try (var stmt = conn.createStatement()){
+//                try (var rs = stmt.executeQuery("SELECT id, name, description, image FROM autos;")){
+//                    var list = new ArrayList<Auto>();
+//                    while (rs.next()) {
+//                        list.add(new Auto(
+//                                rs.getString("id"),
+//                                rs.getString("name"),
+//                                rs.getString("description"),
+//                                rs.getString("image")
+//                        ));
+//                    }
+//                    return list;
+//                }
+//            }
+//        }
+//    }
+
+    public List<Auto> getAll(){
+        List<Auto> autos = null;
+        try {
+            autos = JDBCTemplate.executeQuery(
+                    ds,
+                    "SELECT id, name, description, image FROM autos;",
+                    rs -> new Auto(
+                            rs.getString("id"),
+                            rs.getString("name"),
+                            rs.getString("description"),
+                            rs.getString("image")
+                    ));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return autos;
     }
 
-//    public List<Auto> getAll() throws SQLException{
-//        return JDBCTemplate.executeQuery(
-//                "jdbc:sqlite::memory:",
-//                "SELECT id, name, description, image FROM autos;",
-//                rs -> new Auto(
-//                        rs.getString("id"),
-//                        rs.getString("name"),
-//                        rs.getString("description"),
-//                        rs.getString("image")
-//                ));
+//    public void create(String name, String description, String image) throws SQLException {
+//        try (var conn = ds.getConnection()){
+//            try (var stmt = conn.prepareStatement("INSERT INTO autos (id, name, description, image) VALUES (?, ?, ?, ?);")){
+//                stmt.setString(1, UUID.randomUUID().toString());
+//                stmt.setString(2, name);
+//                stmt.setString(3, description);
+//                stmt.setString(4, image);
+//                stmt.execute();
+//            }
+//        }
 //    }
 
     public void create(String name, String description, String image) throws SQLException {
-        try (var conn = ds.getConnection()){
-            try (var stmt = conn.prepareStatement("INSERT INTO autos (id, name, description, image) VALUES (?, ?, ?, ?);")){
-                stmt.setString(1, UUID.randomUUID().toString());
-                stmt.setString(2, name);
-                stmt.setString(3, description);
-                stmt.setString(4, image);
-                stmt.execute();
-            }
-        }
+        JDBCTemplate.create(ds, name, description, image);
     }
 }
