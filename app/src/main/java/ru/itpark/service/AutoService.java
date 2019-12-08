@@ -3,17 +3,11 @@ package ru.itpark.service;
 import ru.itpark.domain.Auto;
 import ru.itpark.util.JDBCTemplate;
 
-import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class AutoService {
     private final DataSource ds;
