@@ -95,6 +95,7 @@
     </build>
 
     <modules>
-        <module>web-app</module>
+        <!-- вы одинаково назвали в IDEA и родительский проект и дочерний - не надо так делать -->
+        <module>webapp</module>
     </modules>
 </project>
