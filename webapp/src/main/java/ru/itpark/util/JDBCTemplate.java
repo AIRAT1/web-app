@@ -25,13 +25,11 @@ public class JDBCTemplate {
         }
     }
 
-    public static void create(DataSource dataSource, String name, String description, String image) {
+    public static void create(DataSource dataSource, String name) {
         try (Connection connection = dataSource.getConnection()){
-            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO autos (id, name, description, image) VALUES (?, ?, ?, ?);")){
+            try (PreparedStatement statement = connection.prepareStatement("INSERT INTO searches (id, name) VALUES (?, ?);")){
                 statement.setString(1, UUID.randomUUID().toString());
                 statement.setString(2, name);
-                statement.setString(3, description);
-                statement.setString(4, image);
                 statement.execute();
             }
         } catch (SQLException e) {

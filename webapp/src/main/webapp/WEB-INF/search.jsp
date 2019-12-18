@@ -27,7 +27,7 @@
 <%--            <% } %>--%>
 
             <form class="form-inline mr-auto">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchButton">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="name">
                 <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
             </form>
 

@@ -17,7 +17,7 @@ public class SearchService {
         ds = (DataSource)context.lookup("java:/comp/env/jdbc/db");
         try (var conn = ds.getConnection()){
             try (var stmt = conn.createStatement()){
-                stmt.execute("CREATE TABLE IF NOT EXISTS autos (id TEXT PRIMARY KEY , name TEXT NOT NULL, description TEXT NOT NULL, image TEXT);");
+                stmt.execute("CREATE TABLE IF NOT EXISTS searches (id TEXT PRIMARY KEY , name TEXT NOT NULL);");
             }
         }
     }
@@ -27,12 +27,10 @@ public class SearchService {
         try {
             searchQueries = JDBCTemplate.executeQuery(
                     ds,
-                    "SELECT id, name, description, image FROM autos;",
+                    "SELECT id, name FROM searches;",
                     rs -> new SearchQuery(
                             rs.getString("id"),
-                            rs.getString("name"),
-                            rs.getString("description"),
-                            rs.getString("image")
+                            rs.getString("name")
                     ));
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,7 +38,7 @@ public class SearchService {
         return searchQueries;
     }
 
-    public void create(String name, String description, String image) throws SQLException {
-        JDBCTemplate.create(ds, name, description, image);
+    public void create(String name) throws SQLException {
+        JDBCTemplate.create(ds, name);
     }
 }

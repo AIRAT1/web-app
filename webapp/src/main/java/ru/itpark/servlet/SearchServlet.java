@@ -37,18 +37,18 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            var name = req.getParameter("name");
+        try {
+            var name = req.getParameter("name");
 //            var status = req.getParameter("status");
             var part = req.getPart("query"); //fixme
 
             var image = fileService.writeFile(part);
 
-//            searchService.create(name, status, image);
+            searchService.create(name);
             resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath()));
-//        }catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new ServletException(e);
-//        }
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServletException(e);
+        }
     }
 }
