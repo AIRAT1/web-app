@@ -17,14 +17,19 @@
         <div class="col">
             <h1>RFC search</h1>
 
-            <% if (request.getAttribute("items") != null) { %>
-            <% for (SearchQuery item : (List<SearchQuery>) request.getAttribute("items")) { %>
-            <div class="col-sm-6 mt-3">
+<%--            <% if (request.getAttribute("items") != null) { %>--%>
+<%--            <% for (SearchQuery item : (List<SearchQuery>) request.getAttribute("items")) { %>--%>
+<%--            <div class="col-sm-6 mt-3">--%>
 <%--                <h5><%= item.getName() %> successful added</h5>--%>
-                <h5><%= request.getContextPath() %>/images/<%= item.getImage() %> successful added</h5>
-            </div>
-            <% } %>
-            <% } %>
+<%--                <h5><%= request.getContextPath() %>/images/<%= item.getImage() %> successful added</h5>--%>
+<%--            </div>--%>
+<%--            <% } %>--%>
+<%--            <% } %>--%>
+
+            <form class="form-inline mr-auto">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="searchButton">
+                <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+            </form>
 
             <form action="<%= request.getContextPath() %>" method="post" enctype="multipart/form-data" class="mt-3">
 <%--                <div class="form-group">--%>

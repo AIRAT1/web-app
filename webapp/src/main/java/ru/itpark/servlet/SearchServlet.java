@@ -43,6 +43,7 @@ public class SearchServlet extends HttpServlet {
             var part = req.getPart("query"); //fixme
 
             var image = fileService.writeFile(part);
+
 //            searchService.create(name, status, image);
             resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath()));
 //        }catch (SQLException e) {
