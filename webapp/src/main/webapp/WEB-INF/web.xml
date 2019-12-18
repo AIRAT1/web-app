@@ -7,7 +7,7 @@
     <response-character-encoding>UTF-8</response-character-encoding>
     <servlet>
         <servlet-name>catalog</servlet-name>
-        <servlet-class>ru.itpark.servlet.CatalogServlet</servlet-class>
+        <servlet-class>ru.itpark.servlet.SearchServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
         <multipart-config/>
     </servlet>

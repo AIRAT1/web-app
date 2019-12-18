@@ -10,8 +10,8 @@
     />
 
     <Resource
-            name="bean/auto-service"
-            type="ru.itpark.service.AutoService"
+            name="bean/search-service"
+            type="ru.itpark.service.SearchService"
             factory="org.apache.naming.factory.BeanFactory"
     />
 

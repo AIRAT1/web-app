@@ -1,6 +1,6 @@
 package ru.itpark.servlet;
 
-import ru.itpark.service.AutoService;
+import ru.itpark.service.SearchService;
 import ru.itpark.service.FileService;
 
 import javax.naming.InitialContext;
@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class CatalogServlet extends HttpServlet {
-    private AutoService autoService;
+public class SearchServlet extends HttpServlet {
+    private SearchService searchService;
     private FileService fileService;
 
     @Override
@@ -21,7 +21,7 @@ public class CatalogServlet extends HttpServlet {
         InitialContext context = null;
         try {
             context = new InitialContext();
-            autoService = (AutoService) context.lookup("java:/comp/env/bean/auto-service");
+            searchService = (SearchService) context.lookup("java:/comp/env/bean/search-service");
             fileService = (FileService) context.lookup("java:/comp/env/bean/file-service");
         } catch (NamingException e) {
             e.printStackTrace();
@@ -31,23 +31,23 @@ public class CatalogServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("items", autoService.getAll());
-        req.getRequestDispatcher("/WEB-INF/catalog.jsp").forward(req, resp);
+        req.setAttribute("items", searchService.getAll()); // TODO delete?
+        req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            var name = req.getParameter("name");
-            var description = req.getParameter("description");
-            var part = req.getPart("image");
+//        try {
+//            var name = req.getParameter("name");
+//            var status = req.getParameter("status");
+            var part = req.getPart("query"); //fixme
 
             var image = fileService.writeFile(part);
-            autoService.create(name, description, image);
+//            searchService.create(name, status, image);
             resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath()));
-        }catch (SQLException e) {
-            e.printStackTrace();
-            throw new ServletException(e);
-        }
+//        }catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new ServletException(e);
+//        }
     }
 }
