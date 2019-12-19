@@ -16,17 +16,24 @@
     <div class="row">
         <div class="col">
             <h1>RFC search</h1>
+            <form class="form-inline mr-auto">
+                <button class="btn btn-primary mt-3" type="submit" onclick="form.action='/'"> Go Home</button>
+            </form>
+
+            <form action="<%= request.getContextPath() %>" method="post" class="form-inline mr-auto">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
+                <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+            </form>
 
             <%
-                if (request.getAttribute("query") != null) {
-                    out.println("<p>" + request.getAttribute("query") + "</p>");
+                List<String> queries = (List<String>) request.getAttribute("userQueries");
+
+                if (queries != null && !queries.isEmpty()) {
+                    for (String s : queries) {
+                        out.println("<li>" + s + "</li>");
+                    }
                 }
             %>
-
-            <form action="<%= request.getContextPath() %>" method="post"  class="form-inline mr-auto">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="query">
-                <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit" >Search</button>
-            </form>
         </div>
     </div>
 </div>

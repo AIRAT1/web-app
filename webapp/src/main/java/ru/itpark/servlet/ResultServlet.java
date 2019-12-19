@@ -1,5 +1,6 @@
 package ru.itpark.servlet;
 
+import ru.itpark.domain.SearchQuery;
 import ru.itpark.service.FileService;
 import ru.itpark.service.SearchService;
 
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResultServlet extends HttpServlet {
     private SearchService searchService;
@@ -32,6 +35,10 @@ public class ResultServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<String> queries = searchService.getAll().stream()
+                .map(SearchQuery::getName)
+                .collect(Collectors.toList());
+        req.setAttribute("userQueries", queries);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/result.jsp");
         requestDispatcher.forward(req, resp);
     }
@@ -40,9 +47,7 @@ public class ResultServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             var name = req.getParameter("query");
-            System.out.println(name);
             searchService.create(name);
-            System.out.println(searchService.getAll());
             req.setAttribute("query", name);
             doGet(req, resp);
         }catch (SQLException e) {
