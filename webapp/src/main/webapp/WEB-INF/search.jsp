@@ -26,10 +26,9 @@
 <%--            <% } %>--%>
 <%--            <% } %>--%>
 
-            <form class="form-inline mr-auto">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="name">
-                <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
-            </form>
+
+
+
 
             <form action="<%= request.getContextPath() %>" method="post" enctype="multipart/form-data" class="mt-3">
 <%--                <div class="form-group">--%>
@@ -45,6 +44,11 @@
                     <label class="custom-file-label" for="file">Choose text ...</label>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3">Create</button>
+            </form>
+
+            <form class="form-inline mr-auto">
+                <%--                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="name">--%>
+                <button class="btn btn-primary mt-3" type="submit" onclick="form.action='result'"> Go To Search</button>
             </form>
         </div>
     </div>

@@ -1,10 +1,11 @@
 package ru.itpark.servlet;
 
-import ru.itpark.service.SearchService;
 import ru.itpark.service.FileService;
+import ru.itpark.service.SearchService;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class SearchServlet extends HttpServlet {
+public class ResultServlet extends HttpServlet {
     private SearchService searchService;
     private FileService fileService;
 
@@ -31,24 +32,22 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("items", searchService.getAll()); // TODO delete?
-        req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/result.jsp");
+        requestDispatcher.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            var name = req.getParameter("name");
-//            var status = req.getParameter("status");
-            var part = req.getPart("query"); //fixme
-                var image = fileService.writeFile(part); //fixme
-
-
-//            searchService.create(name);
-            resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath())); //fixme
-//        }catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new ServletException(e);
-//        }
+        try {
+            var name = req.getParameter("query");
+            System.out.println(name);
+            searchService.create(name);
+            System.out.println(searchService.getAll());
+            req.setAttribute("query", name);
+            doGet(req, resp);
+        }catch (SQLException e) {
+            e.printStackTrace();
+            throw new ServletException(e);
+        }
     }
 }
