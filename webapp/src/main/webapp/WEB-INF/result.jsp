@@ -36,13 +36,6 @@
                     <%}%>
                 <%}%>
 
-
-<%--            <% if( true ) {%>--%>
-<%--            <a href="page1.htm">page 1</a>--%>
-<%--            <%} else if( false ) {%>--%>
-<%--            <a href="page2.htm">page 2</a>--%>
-<%--            <%}%>--%>
-
         </div>
     </div>
 </div>

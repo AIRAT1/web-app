@@ -52,7 +52,7 @@ public class ResultServlet extends HttpServlet {
             req.setAttribute("query", name);
             Path path = fileService.readAllFiles(name);
             if (path != null) {
-                System.out.println(path.toFile() + ".txt");
+                System.out.println(path.toUri() + ".txt");
                 req.setAttribute("path", path);
             }
             doGet(req, resp);
