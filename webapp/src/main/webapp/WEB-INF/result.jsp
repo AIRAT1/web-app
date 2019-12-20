@@ -1,5 +1,6 @@
 <%@ page import="ru.itpark.domain.SearchQuery" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.nio.file.Path" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!doctype html>
 <html lang="en">
@@ -25,15 +26,23 @@
                 <button class="btn blue-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
             </form>
 
-            <%
-                List<String> queries = (List<String>) request.getAttribute("userQueries");
+            <%  List<String> queries = (List<String>) request.getAttribute("userQueries");%>
+            <%    Path result = (Path) request.getAttribute("path");%>
+              <%  if (queries != null && !queries.isEmpty()) {%>
+                <%    for (String s : queries) {%>
+                  <%      out.print("<li>" + s + "</li>");%>
+                <%if (result != null)%>
+                        <a href="<%=result.toUri() + ".txt"%>">Download</a>
+                    <%}%>
+                <%}%>
 
-                if (queries != null && !queries.isEmpty()) {
-                    for (String s : queries) {
-                        out.println("<li>" + s + "</li>");
-                    }
-                }
-            %>
+
+<%--            <% if( true ) {%>--%>
+<%--            <a href="page1.htm">page 1</a>--%>
+<%--            <%} else if( false ) {%>--%>
+<%--            <a href="page2.htm">page 2</a>--%>
+<%--            <%}%>--%>
+
         </div>
     </div>
 </div>

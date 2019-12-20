@@ -17,6 +17,7 @@ public class FileService {
     private final String resultPath;
     private String query = "";
     private Path result;
+    boolean toWrite = false;
 
     public FileService() throws IOException {
         uploadPath = System.getenv("UPLOAD_PATH");
@@ -29,12 +30,18 @@ public class FileService {
         Files.copy(path, os);
     }
 
-    public void readAllFiles(String query) throws IOException {
+    public Path readAllFiles(String query) throws IOException {
         this.query = query;
         result = Paths.get(this.resultPath).resolve(query);
-        Files.walk(Paths.get(uploadPath))
-                .filter(Files::isRegularFile)
-                .forEach(this::readData);
+        if (query != null && !query.isEmpty()) {
+            Files.walk(Paths.get(uploadPath))
+                    .filter(Files::isRegularFile)
+                    .forEach(this::readData);
+            if (toWrite) {
+                return result;
+            }
+        }
+        return null;
     }
 
     public String writeFile(Part part) throws IOException {
@@ -65,6 +72,7 @@ public class FileService {
                 System.out.println(s);
             }
             if (!result.isEmpty()) {
+                toWrite = true;
                 writeResult(result);
             }
         } catch (IOException e) {

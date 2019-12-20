@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,8 +50,12 @@ public class ResultServlet extends HttpServlet {
             var name = req.getParameter("query");
             searchService.create(name);
             req.setAttribute("query", name);
+            Path path = fileService.readAllFiles(name);
+            if (path != null) {
+                System.out.println(path.toUri());
+                req.setAttribute("path", path);
+            }
             doGet(req, resp);
-            fileService.readAllFiles(name);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new ServletException(e);
