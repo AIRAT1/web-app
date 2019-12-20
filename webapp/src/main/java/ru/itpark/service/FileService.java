@@ -2,16 +2,22 @@ package ru.itpark.service;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Part;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class FileService {
     private final String uploadPath;
+    private final String resultPath;
+    private String query = "";
 
     public FileService() throws IOException {
         uploadPath = System.getenv("UPLOAD_PATH");
+        resultPath = System.getenv("RESULT_PATH");
         Files.createDirectories(Paths.get(uploadPath));
     }
 
@@ -20,9 +26,54 @@ public class FileService {
         Files.copy(path, os);
     }
 
+    public void readAllFiles(String query) throws IOException {
+        this.query = query;
+        Files.walk(Paths.get(uploadPath))
+                .filter(Files::isRegularFile)
+                .forEach(this::readData);
+    }
+
     public String writeFile(Part part) throws IOException {
         var id = UUID.randomUUID().toString();
         part.write(Paths.get(uploadPath).resolve(id).toString());
         return id;
+    }
+
+    public void readData(Path path) {
+        try {
+            File readFile = path.toFile();
+            FileInputStream fis = new FileInputStream(readFile);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            int number = 1;
+            List<String> result = new ArrayList<>();
+            while ((line = reader.readLine()) != null) {
+//                System.out.println(line); // TODO
+//                System.out.println(query); // TODO
+//                System.out.println(readFile.getName()); // TODO
+                if (line.toLowerCase().contains(query)) {
+                    //
+                    result.add("[" + readFile.getName()  + "] " + " in line number " +  number + " text: " + line);
+                }
+                number++;
+            }
+//            for (String s :result) {
+//                System.out.println(s);
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Reading data error");
+        }
+    }
+
+    public void writeResult() {
+        try (
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream()))
+                ){
+
+        }catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error write data");
+        }
     }
 }

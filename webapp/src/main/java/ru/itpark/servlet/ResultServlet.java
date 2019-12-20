@@ -50,6 +50,7 @@ public class ResultServlet extends HttpServlet {
             searchService.create(name);
             req.setAttribute("query", name);
             doGet(req, resp);
+            fileService.readAllFiles(name);
         }catch (SQLException e) {
             e.printStackTrace();
             throw new ServletException(e);
