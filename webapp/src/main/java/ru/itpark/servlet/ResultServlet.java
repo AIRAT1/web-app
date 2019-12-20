@@ -50,13 +50,11 @@ public class ResultServlet extends HttpServlet {
             var name = req.getParameter("query");
             searchService.create(name);
             req.setAttribute("query", name);
-            Path path = fileService.readAllFiles(name);
-            if (path != null) {
+                Path path = fileService.readAllFiles(name);
                 System.out.println(path.toUri() + ".txt");
                 req.setAttribute("path", path);
-            }
             doGet(req, resp);
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             throw new ServletException(e);
         }

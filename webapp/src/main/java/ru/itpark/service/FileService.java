@@ -17,7 +17,6 @@ public class FileService {
     private final String resultPath;
     private String query = "";
     private Path result;
-    boolean toWrite = false;
 
     public FileService() throws IOException {
         uploadPath = System.getenv("UPLOAD_PATH");
@@ -32,16 +31,13 @@ public class FileService {
 
     public Path readAllFiles(String query) throws IOException {
         this.query = query;
-        result = Paths.get(this.resultPath).resolve(query);
+            result = Paths.get(this.resultPath).resolve(query);
         if (query != null && !query.isEmpty()) {
-            Files.walk(Paths.get(uploadPath))
-                    .filter(Files::isRegularFile)
-                    .forEach(this::readData);
-            if (toWrite) {
-                return result;
+                Files.walk(Paths.get(uploadPath))
+                        .filter(Files::isRegularFile)
+                        .forEach(this::readData);
             }
-        }
-        return null;
+            return result;
     }
 
     public String writeFile(Part part) throws IOException {
@@ -71,8 +67,7 @@ public class FileService {
             for (String s : result) {
                 System.out.println(s);
             }
-            if (!result.isEmpty()) {
-                toWrite = true;
+            if (result.size() > 1) {
                 writeResult(result);
             }
         } catch (IOException e) {
@@ -82,15 +77,14 @@ public class FileService {
     }
 
     public void writeResult(List<String> list) throws IOException {
-
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile() + ".txt"), StandardCharsets.UTF_8))){
-            for (String s : list) {
-                writer.write(s);
-                writer.newLine();
+            try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile() + ".txt"), StandardCharsets.UTF_8))){
+                for (String s : list) {
+                    writer.write(s);
+                    writer.newLine();
+                }
+            }catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error write result file");
             }
-        }catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error write result file");
-        }
     }
 }

@@ -28,11 +28,13 @@
 
             <%  List<String> queries = (List<String>) request.getAttribute("userQueries");%>
             <%    Path result = (Path) request.getAttribute("path");%>
-              <%  if (queries != null && !queries.isEmpty()) {%>
+              <%  if (queries != null && !queries.isEmpty() && result != null) {%>
                 <%    for (String s : queries) {%>
-                  <%      out.print("<li>" + s + "</li>");%>
-                <%if (result != null)%>
-                        <a href="<%=result.toUri() + ".txt"%>">Download</a>
+            <%if (s != null && s.length() != 0)%>
+<%--            <li><%      out.clearBuffer();%></li>--%>
+            <li><%      out.println(s + " " + result.toUri() + ".txt");%></li>
+<%--            "<li>"<%      out.println(s + " " + result.toUri());%></li>--%>
+<%--                        <a href="<%=result.toUri() + ".txt"%>">Download</a>--%>
                     <%}%>
                 <%}%>
 
