@@ -83,7 +83,7 @@ public class FileService {
 
     public void writeResult(List<String> list) throws IOException {
 
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile()), StandardCharsets.UTF_8))){
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile() + ".txt"), StandardCharsets.UTF_8))){
             for (String s : list) {
                 writer.write(s);
                 writer.newLine();
