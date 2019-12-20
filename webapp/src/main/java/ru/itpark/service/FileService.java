@@ -16,6 +16,7 @@ public class FileService {
     private final String uploadPath;
     private final String resultPath;
     private String query = "";
+    private Path result;
 
     public FileService() throws IOException {
         uploadPath = System.getenv("UPLOAD_PATH");
@@ -30,6 +31,7 @@ public class FileService {
 
     public void readAllFiles(String query) throws IOException {
         this.query = query;
+        result = Paths.get(this.resultPath).resolve(query);
         Files.walk(Paths.get(uploadPath))
                 .filter(Files::isRegularFile)
                 .forEach(this::readData);
@@ -72,8 +74,8 @@ public class FileService {
     }
 
     public void writeResult(List<String> list) throws IOException {
-        Path path = Paths.get(resultPath).resolve(query);
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path.toFile()), StandardCharsets.UTF_8))){
+
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile()), StandardCharsets.UTF_8))){
             for (String s : list) {
                 writer.write(s);
                 writer.newLine();
