@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 apache-tomcat*
 upload/
+result/
 
 ### STS ###
 .apt_generated

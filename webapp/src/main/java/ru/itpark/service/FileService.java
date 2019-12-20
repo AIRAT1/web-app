@@ -3,6 +3,8 @@ package ru.itpark.service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Part;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,23 +59,28 @@ public class FileService {
                 }
                 number++;
             }
-//            for (String s :result) {
-//                System.out.println(s);
-//            }
+            for (String s : result) {
+                System.out.println(s);
+            }
+            if (!result.isEmpty()) {
+                writeResult(result);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException("Reading data error");
         }
     }
 
-    public void writeResult() {
-        try (
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream()))
-                ){
-
+    public void writeResult(List<String> list) throws IOException {
+        Path path = Paths.get(resultPath).resolve(query);
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path.toFile()), StandardCharsets.UTF_8))){
+            for (String s : list) {
+                writer.write(s);
+                writer.newLine();
+            }
         }catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error write data");
+            throw new RuntimeException("Error write result file");
         }
     }
 }
