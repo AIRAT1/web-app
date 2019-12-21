@@ -30,13 +30,9 @@
             <%String name = request.getParameter("query");%>
             <%    Path result = (Path) request.getAttribute("path");%>
               <%  if (queries != null && !queries.isEmpty() && result != null) {%>
-<%--                <%    for (String s : queries) {%>--%>
-<%--            <%if (s != null && s.length() != 0)%>--%>
-<%--            <li><%      out.println(s);%></li>--%>
-<%--                    <%}%>--%>
             <li><%out.println(name);%></li>
             <button type="button" class="btn btn-link" name="link" onclick="<%=result.toUri() + ".txt"%>"><%=result.toUri() + ".txt"%></button>
-            <a href="<%=result.toUri() + ".txt"%>" class="btn btn-info" role="button">Link Button</a>
+<%--            <a href="<%=result.toUri() + ".txt"%>" class="btn btn-info" role="button">Link Button</a>--%>
             <%}%>
 
         </div>

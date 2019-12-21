@@ -17,16 +17,16 @@
         <url-pattern/>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>images</servlet-name>
-        <servlet-class>ru.itpark.servlet.ImageServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>images</servlet-name>
-        <url-pattern>/images/*</url-pattern>
-    </servlet-mapping>
+<!--    <servlet>-->
+<!--        <servlet-name>images</servlet-name>-->
+<!--        <servlet-class>ru.itpark.servlet.ImageServlet</servlet-class>-->
+<!--        <load-on-startup>1</load-on-startup>-->
+<!--    </servlet>-->
+<!--    -->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>images</servlet-name>-->
+<!--        <url-pattern>/images/*</url-pattern>-->
+<!--    </servlet-mapping>-->
 
     <servlet>
         <servlet-name>result</servlet-name>

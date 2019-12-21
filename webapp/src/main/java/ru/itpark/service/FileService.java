@@ -29,7 +29,7 @@ public class FileService {
         Files.copy(path, os);
     }
 
-    public Path readAllFiles(String query) throws IOException {
+    public void readAllFiles(String query) throws IOException {
         this.query = query;
             result = Paths.get(this.resultPath).resolve(query);
         if (query != null && !query.isEmpty()) {
@@ -37,7 +37,6 @@ public class FileService {
                         .filter(Files::isRegularFile)
                         .forEach(this::readData);
             }
-            return result;
     }
 
     public String writeFile(Part part) throws IOException {
