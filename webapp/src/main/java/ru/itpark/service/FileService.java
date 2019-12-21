@@ -67,7 +67,7 @@ public class FileService {
             for (String s : result) {
                 System.out.println(s);
             }
-            if (result.size() > 1) {
+            if (result.size() > 0) {
                 writeResult(result);
             }
         } catch (IOException e) {
