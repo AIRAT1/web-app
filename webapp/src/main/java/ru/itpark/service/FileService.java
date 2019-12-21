@@ -17,6 +17,7 @@ public class FileService {
     private final String resultPath;
     private String query = "";
     private Path result;
+    public static boolean writeResult;
 
     public FileService() throws IOException {
         uploadPath = System.getenv("UPLOAD_PATH");
@@ -54,11 +55,7 @@ public class FileService {
             int number = 1;
             List<String> result = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
-//                System.out.println(line); // TODO
-//                System.out.println(query); // TODO
-//                System.out.println(readFile.getName()); // TODO
                 if (line.toLowerCase().contains(query)) {
-                    //
                     result.add("[" + readFile.getName()  + "] " + " in line number " +  number + " text: " + line);
                 }
                 number++;
@@ -76,6 +73,7 @@ public class FileService {
     }
 
     public void writeResult(List<String> list) throws IOException {
+        writeResult = true;
             try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result.toFile() + ".txt"), StandardCharsets.UTF_8))){
                 for (String s : list) {
                     writer.write(s);

@@ -54,10 +54,11 @@ public class ResultServlet extends HttpServlet {
             req.setAttribute("query", name);
             fileService.readAllFiles(name);
             Path path = Paths.get(System.getenv("RESULT_PATH")).resolve(name);
-//            if (path.toFile().exists()) {
+            if (FileService.writeResult) {
                 System.out.println(path.toUri() + ".txt");
                 req.setAttribute("path", path);
-//            }
+            }
+            FileService.writeResult = false;
             doGet(req, resp);
         } catch (SQLException e) {
             e.printStackTrace();

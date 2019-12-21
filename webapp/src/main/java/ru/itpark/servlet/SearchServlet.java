@@ -31,24 +31,13 @@ public class SearchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("items", searchService.getAll()); // TODO delete?
+        req.setAttribute("items", searchService.getAll());
         req.getRequestDispatcher("/WEB-INF/search.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        try {
-//            var name = req.getParameter("name");
-//            var status = req.getParameter("status");
-            var part = req.getPart("query"); //fixme
-                var image = fileService.writeFile(part); //fixme
-
-
-//            searchService.create(name);
-            resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath())); //fixme
-//        }catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new ServletException(e);
-//        }
+            var part = req.getPart("query");
+            resp.sendRedirect(String.join("/", req.getContextPath(), req.getServletPath()));
     }
 }
