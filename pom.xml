@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
-        <sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
+        <sqlite-jdbc.version>3.41.2.2</sqlite-jdbc.version>
         <lombok.version>1.18.10</lombok.version>
         <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <webapp-runner.version>9.0.27.1</webapp-runner.version>
